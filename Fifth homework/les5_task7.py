@@ -36,8 +36,6 @@ with open(path_to_file, 'r', encoding='cp1251') as file:
             firms_expenses[current_firm_info[0]] += int(current_firm_info[3])
             firms_num_of_lines[current_firm_info[0]] += 1
 
-print(firms_incomes)
-
 for key in firms_incomes:
     if firms_incomes[key] - firms_expenses[key] > 0:
         profitable_firms.append({key, firms_incomes[key]/firms_num_of_lines[key]})
