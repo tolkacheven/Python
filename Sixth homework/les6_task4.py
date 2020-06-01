@@ -22,13 +22,18 @@ class Car:
         print(f'Текущая скорость: {self.speed}')
 
     def go(self):
+        self.speed = 30
         print('Машина поехала')
 
     def stop(self):
+        self.speed = 0
         print('Машина остановилась')
 
     def turn(self, direction):
-        print(f'Машина повернула {direction}')
+        if self.speed == 0:
+            print('Машина разворачивается')
+        else:
+            print(f'Машина повернула {direction}')
 
     def display_info(self):
         print(f'{self.name}, {self.color}, speed: {self.speed}')
@@ -104,3 +109,11 @@ policecar.name  = 'Ford Police Interceptor Utility Hybrid SUV'
 policecar.speed = 120
 policecar.color = 'Black'
 policecar.display_info()
+
+
+policecar.go()
+policecar.stop()
+policecar.turn('налево')
+policecar.go()
+policecar.turn('направо')
+policecar.signal()
