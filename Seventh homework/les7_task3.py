@@ -38,20 +38,23 @@ class Cell:
 
     # Разность клеток. Результат - новая клетка, с кол-ом ячеек, равным разности
     def __sub__(self, another_cell):
+        # raise Exception почему-то вызвал ошибку. Буду разбираться. Пока сделал через принт
         if self.cells <= another_cell.cells:
-            raise Exception('В первой клетке недостаточно ячеек!')
+            print('Ошибка, в первой клетке меньше ячеек!')
 
         return Cell(self.cells - another_cell.cells)
 
 
     # Умножение клеток: в результате - одна клетка, с кол-ом ячеек, равным произведению ячеек двух клеток
     def __mul__(self, another_cell):
-        return self.set_cells(self.cells * another_cell.cells)
+        self.set_cells(self.cells * another_cell.cells)
+        return self
 
     # Деление клеток: Создается общая клетка из двух. Число ячеек общей клетки определяется как целочисленное деление
     # количества ячеек этих двух клеток.
     def __truediv__(self, another_cell):
-        return self.set_cells(round(self.cells/another_cell.cells))
+        self.set_cells(round(self.cells/another_cell.cells))
+        return self
 
 
     def make_order(self, cells_in_line):
@@ -61,4 +64,15 @@ class Cell:
 first_cell = Cell(10)
 second_cell = Cell(20)
 
+first_cell *= second_cell
+print(first_cell.make_order(5))
+
+second_cell /= first_cell
 print(first_cell.make_order(3))
+
+third_cell = first_cell + second_cell
+fourth_cell = third_cell - first_cell
+
+
+print(third_cell.make_order(7))
+print(fourth_cell.make_order(2))
