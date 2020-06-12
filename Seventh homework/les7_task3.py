@@ -20,4 +20,45 @@
 Тогда метод make_order() вернет строку: *****\n*****\n**.
 Или, количество ячеек клетки равняется 15, количество ячеек в ряду — 5. Тогда метод make_order() вернет строку: *****\n*****\n*****.
 """
+class Cell:
+    def __init__(self, cells):
+        self.__cells = cells
 
+    @property
+    def cells(self) -> int:
+        return int(self.__cells)
+
+    def set_cells(self, cells):
+        self.__cells = cells
+
+    # Сложение двух клеток. Результат - новый экземпляр класса, с количеством ячеей, равным сумме ячеей в каждой
+    def __add__(self, another_cell):
+        return Cell(self.cells + another_cell.cells)
+
+
+    # Разность клеток. Результат - новая клетка, с кол-ом ячеек, равным разности
+    def __sub__(self, another_cell):
+        if self.cells <= another_cell.cells:
+            raise Exception('В первой клетке недостаточно ячеек!')
+
+        return Cell(self.cells - another_cell.cells)
+
+
+    # Умножение клеток: в результате - одна клетка, с кол-ом ячеек, равным произведению ячеек двух клеток
+    def __mul__(self, another_cell):
+        return self.set_cells(self.cells * another_cell.cells)
+
+    # Деление клеток: Создается общая клетка из двух. Число ячеек общей клетки определяется как целочисленное деление
+    # количества ячеек этих двух клеток.
+    def __truediv__(self, another_cell):
+        return self.set_cells(round(self.cells/another_cell.cells))
+
+
+    def make_order(self, cells_in_line):
+        result = '*' * self.cells
+        return '\n'.join(result[i:i+cells_in_line] for i in range(0, len(result), cells_in_line))
+
+first_cell = Cell(10)
+second_cell = Cell(20)
+
+print(first_cell.make_order(3))
